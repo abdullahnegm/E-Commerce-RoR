@@ -8,6 +8,16 @@ Bundler.require(*Rails.groups)
 
 module RubyBackend
   class Application < Rails::Application
+
+    # CORS
+
+    Rails.application.config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'http://localhost:3001'
+        resource '*', headers: :any, methods: :any
+      end
+    end
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 

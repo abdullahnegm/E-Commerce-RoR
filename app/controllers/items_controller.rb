@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
     before_action :item_params, only: [:create, :update]
     before_action :get_item, only: [:destroy, :update, :show]
+    skip_before_action :authorized
 
     def index
         @items = Item.all
