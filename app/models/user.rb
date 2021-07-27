@@ -1,6 +1,8 @@
 class User < ApplicationRecord
     has_secure_password
 
+    has_many :orders, -> { order(created_at: :asc) }
+
     REGEX_PATTERN = /\A^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$\z/
 
     validates :username, presence: true, length: { in: 3..20},

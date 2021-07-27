@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
     before_action :user_params, only: [:create, :update]
     before_action :get_user, only: [:destroy, :update, :show]
+    skip_before_action :authorized, only: [:create]
 
     def index
         users = User.all

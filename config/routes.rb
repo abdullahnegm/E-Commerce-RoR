@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :items
   resources :users
+  resources :orders
+  resources :order_items
 
   post '/login', to: 'authentication#login', as: :login
 end

@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::API
     before_action :authorized
 
-    def logged_in_user
+    helper_method :current_user
+
+    def current_user
         header = request.headers['Authorization']
         if header && AuthenticationTokenService::decoded_token( header )
             user_id = AuthenticationTokenService.decoded_token( header )[0]['user_id']
@@ -12,7 +14,7 @@ class ApplicationController < ActionController::API
     end
     
     def logged_in?
-        !!logged_in_user
+        !!current_user
     end
     
     def authorized

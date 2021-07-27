@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
     before_action :item_params, only: [:create, :update]
     before_action :get_item, only: [:destroy, :update, :show]
-    skip_before_action :authorized
+    # skip_before_action :authorized
 
     def index
         @items = Item.all
@@ -27,7 +27,7 @@ class ItemsController < ApplicationController
 
     def destroy
         @item.destroy
-        render json: {response: "Item deleted successfully", user: @user}
+        render json: {response: "Item deleted successfully"}
     end
 
     private
