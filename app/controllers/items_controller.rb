@@ -27,7 +27,7 @@ class ItemsController < ApplicationController
 
     def destroy
         @item.destroy
-        render json: {response: "Item deleted successfully"}
+        render json: {response: "Item deleted successfully" }
     end
 
     private

@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::API
     before_action :authorized
 
-    helper_method :current_user
-
     def current_user
         header = request.headers['Authorization']
         if header && AuthenticationTokenService::decoded_token( header )
@@ -20,6 +18,4 @@ class ApplicationController < ActionController::API
     def authorized
         render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
     end
-
-
 end
