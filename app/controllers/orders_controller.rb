@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
     before_action :get_order, only: [:show]
-    before_action :is_owner
+    before_action :is_owner, only: [:show]
 
     def index
         orders = Order.all
@@ -8,12 +8,12 @@ class OrdersController < ApplicationController
     end
 
     def show
-        render json: { order: @order, items: @order.order_items, total_price: @order.get_total_price }
+        render json: { order: @order, items: @order.order_items, total_price: @order.get_total_price.to_i }
     end 
 
     private 
     def get_order
-        @order = Order.find( params[:id] )
+        @order = Order.current_order current_user
     end
 
     def is_owner
