@@ -9,7 +9,7 @@ class PurchasesController < ApplicationController
         payment_method_types: ['card'],
         line_items: [{
             name:     @order.id,
-            amount:   @order.get_total_price.to_i,
+            amount:   @order.get_total_price.to_i * 100,
             currency: 'usd',
             quantity: 1
         }],
@@ -31,6 +31,8 @@ class PurchasesController < ApplicationController
     def is_owner
         if current_user != @order.user
             render json: { message: 'You are not Authorized' }, status: :unauthorized 
+        elsif @order.billing_address.nil? 
+            render json: { message: 'Wrong Data' }, status: :bad_request
         end
     end
 

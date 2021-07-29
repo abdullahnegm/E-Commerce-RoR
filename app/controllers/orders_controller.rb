@@ -13,7 +13,8 @@ class OrdersController < ApplicationController
 
     private 
     def get_order
-        @order = Order.current_order current_user
+        @order = Order.find( params[:id] )
+        # @order = Order.current_order current_user
     end
 
     def is_owner
