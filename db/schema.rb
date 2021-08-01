@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_19_164110) do
+ActiveRecord::Schema.define(version: 2021_07_29_022238) do
+
+  create_table "billing_addresses", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "shipping_address"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_billing_addresses_on_user_id"
+  end
 
   create_table "items", force: :cascade do |t|
     t.string "title", null: false
@@ -36,9 +44,10 @@ ActiveRecord::Schema.define(version: 2021_07_19_164110) do
   create_table "orders", force: :cascade do |t|
     t.integer "user_id", null: false
     t.boolean "ordered_boolean", default: false
-    t.string "billing_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "billing_address_id"
+    t.index ["billing_address_id"], name: "index_orders_on_billing_address_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -50,7 +59,9 @@ ActiveRecord::Schema.define(version: 2021_07_19_164110) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "billing_addresses", "users"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
+  add_foreign_key "orders", "billing_addresses"
   add_foreign_key "orders", "users"
 end

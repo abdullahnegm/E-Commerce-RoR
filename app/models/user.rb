@@ -1,7 +1,8 @@
 class User < ApplicationRecord
     has_secure_password
 
-    has_many :orders, -> { order(created_at: :asc) }
+    has_many :orders, -> { order(created_at: :asc) }, dependent: :delete_all
+    has_many :billing_addresses, -> { order(created_at: :asc) }, dependent: :delete_all
 
     REGEX_PATTERN = /\A^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$\z/
 

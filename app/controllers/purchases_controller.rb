@@ -3,6 +3,12 @@ class PurchasesController < ApplicationController
     before_action :is_owner
 
     def create
+        p "Worked 1"
+        p "Worked 1"
+        p "Worked 1"
+        p "Worked 1"
+        p "Worked 1"
+        p "Worked 1"
         Stripe::Checkout::Session.create({
         success_url: root_url,
         cancel_url: root_url,
@@ -18,6 +24,8 @@ class PurchasesController < ApplicationController
 
         @order.ordered_boolean = true
         @order.save()
+        p "Worked 2"
+        render json: {message: "Worked"}
     end
 
 

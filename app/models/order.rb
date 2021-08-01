@@ -1,12 +1,20 @@
 class Order < ApplicationRecord
 
-    has_many :order_items, dependent: :destroy
+    has_many :order_items#, dependent: :delete_all
     belongs_to :user, dependent: :destroy
+    belongs_to :billing_address, optional: true
+
+    validates :billing_address, allow_nil: true, allow_blank: true, presence: true
 
     def self.current_order current_user
         if !current_user.orders.empty? 
             if current_user.orders.last.ordered_boolean 
-                current_user.orders.create
+                here = current_user.orders.create
+                if here.save
+                    here
+                else
+                    here.errors
+                end
             else
                 current_user.orders.last
             end

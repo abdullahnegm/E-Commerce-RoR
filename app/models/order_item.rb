@@ -1,8 +1,8 @@
 class OrderItem < ApplicationRecord
 
-    belongs_to :order, dependent: :destroy
+    belongs_to :order
 
-    belongs_to :item, dependent: :destroy
+    belongs_to :item
 
     def get_final_price
         return item.dis_price if item.dis_price

@@ -15,6 +15,8 @@ class OrdersController < ApplicationController
     def get_order
         @order = Order.find( params[:id] )
         # @order = Order.current_order current_user
+    rescue
+        render json: { message: 'Order Doesn\'t Exist' }, status: :bad_request 
     end
 
     def is_owner

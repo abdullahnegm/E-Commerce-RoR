@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :orders
   resources :order_items
   post      '/purchase', to: 'purchases#create'
+  post      '/checkout', to: 'check_outs#create'
+  put       '/checkout', to: 'check_outs#update'
 
   post '/login', to: 'authentication#login', as: :login
 end

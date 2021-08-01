@@ -1,12 +1,19 @@
 class OrderItemsController < ApplicationController
-    before_action :get_order_item, only: [:update, :delete]
+    before_action :get_order_item, only: [:update, :destroy]
     before_action :is_owner, except: [:create]
+    before_action :get_order, only: [:create]
 
 
     def create 
-        order = Order.current_order( current_user )
-        order.order_items.create( order_item_create_params )
-        render json: { order: order }    
+        item  = Item.find( params[:item_id] )
+        if @order.order_items.exists? item_id: item.id
+            order_item = @order.order_items.where( item_id: item.id ).first
+            order_item.quantity += params[:quantity]
+            order_item.save
+        else
+            @order.order_items.create( item_id: params[:item_id], quantity: params[:quantity] )
+        end
+        render json: { order: @order.order_items.count }    
     rescue
         render json: { message: "Something went wrong", status: :bad_request }
     end
@@ -23,12 +30,12 @@ class OrderItemsController < ApplicationController
 
 
     private 
-    def order_item_create_params
-        params.permit(:item_id, :quantity)
+    def params_order_item
+        params.permit(:quantity)
     end
 
-    def order_item_update_params
-        params.permit(:quantity)
+    def get_order
+        @order = Order.current_order( current_user )
     end
 
     private 
