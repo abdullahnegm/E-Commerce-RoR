@@ -3,13 +3,7 @@ class PurchasesController < ApplicationController
     before_action :is_owner
 
     def create
-        p "Worked 1"
-        p "Worked 1"
-        p "Worked 1"
-        p "Worked 1"
-        p "Worked 1"
-        p "Worked 1"
-        Stripe::Checkout::Session.create({
+        @session = Stripe::Checkout::Session.create({
         success_url: root_url,
         cancel_url: root_url,
         payment_method_types: ['card'],
@@ -22,9 +16,15 @@ class PurchasesController < ApplicationController
         mode: 'payment',
         })
 
+        # Stripe::Charge.create({
+        #     amount: @order.get_total_price.to_i * 100,
+        #     currency: 'usd',
+        #     source: params[:token],
+        #     description: 'Plz work',
+        # })
+
         @order.ordered_boolean = true
         @order.save()
-        p "Worked 2"
         render json: {message: "Worked"}
     end
 
