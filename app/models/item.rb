@@ -1,4 +1,8 @@
 class Item < ApplicationRecord
+    include Elasticsearch::Model
+    include Elasticsearch::Model::Callbacks
+
+    
     after_validation :set_slug
 
     validates :title, length: { in: 3..50 }, presence: true

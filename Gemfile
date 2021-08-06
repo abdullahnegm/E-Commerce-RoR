@@ -3,6 +3,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.1'
 gem 'stripe'
+
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+gem 'elasticsearch-transport'
+
 # CORS
 gem 'rack-cors'
 # JWT Authentication

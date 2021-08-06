@@ -62,6 +62,6 @@ ActiveRecord::Schema.define(version: 2021_07_29_022238) do
   add_foreign_key "billing_addresses", "users"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
-  add_foreign_key "orders", "billing_addresses"
+  add_foreign_key "orders", "billing_addresses", on_delete: :cascade
   add_foreign_key "orders", "users"
 end
