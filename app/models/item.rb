@@ -1,8 +1,30 @@
 class Item < ApplicationRecord
     include Elasticsearch::Model
     include Elasticsearch::Model::Callbacks
+    # include Indexing
 
-    
+    # def as_indexed_json options={}
+    #     Denormalizers::Item.new(self).to_hash
+    # end
+
+    # def as_indexed_json(options = {})
+    #     self.as_json(
+    #         only: [:title]
+    #     )
+    # end
+
+    settings index: { number_of_shards: 1 } do
+        mapping dynamic: 'false' do
+          indexes :id, type: :integer
+          indexes :title
+          indexes :description
+          indexes :picture
+          indexes :slug
+          indexes :price, type: :integer
+          indexes :dis_price, type: :integer
+        end
+    end
+
     after_validation :set_slug
 
     validates :title, length: { in: 3..50 }, presence: true
